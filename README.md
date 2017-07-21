@@ -92,7 +92,7 @@ Makefile in <PROJECT_DIR> should define TEST_DIR include test/Makefile
 ```
 CXX = g++
 CXXFLAGS = -std=c++14 $(INCLUDE)
-INCLUDE = -Iinclude/
+INCLUDE = -Iinclude/ -I../maketest/
 LDLIBS = -lpng -lX11 -lGL -lGLEW
 
 TEST_DIR = tests/
