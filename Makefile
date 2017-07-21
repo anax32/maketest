@@ -12,6 +12,8 @@
 #	directory containing test code for compilation.
 #	each .cpp file becomes an executable.
 #	can contain sub-directories.
+#	.cpp files must have unique names.
+#	(the dir structure is flattened)
 #
 # commands:
 # <test-cpp-file>.test:
@@ -29,7 +31,7 @@
 ######################################################
 
 TEST_MKDIR = mkdir -p
-TEST_BIN_DIR = $(TEST_DIR)bin
+TEST_BIN_DIR = $(TEST_DIR)bin/
 
 TESTS = $(wildcard $(TEST_DIR)*/*.cpp)
 TEST_OUTPUTS = $(TESTS:.cpp=.test)
