@@ -19,7 +19,7 @@ Timing wrapper functions:
 + TEST_SUITE (x) : wrap a function x with timing information as a suite
 
 ## Makefile
-The magic makefile which compiles all the files matching <TEST_DIR>/<any subdir>/<filename>.cpp into test programs.
+The magic makefile which compiles all the files matching <TEST_DIR> / \<any> / \<filename>.cpp into test programs.
 
 Each .cpp file will be compiled as a separate executable, so must contain a main function (see below for an example test code file).
 
