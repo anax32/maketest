@@ -1,7 +1,7 @@
 # maketest
 simple test library based on a single header and makefile
 
-## tests.h
+## maketest.h
 Header file to be included in all test code.
 
 NB: It is not required that you include this header in your test code, but it has some useful helper functions.
@@ -41,7 +41,7 @@ See Makefile for a list of commands.
 
 <PROJECT_DIR>/tests/maths_test.cpp
 ```cpp
-#include "../../test/tests.h"
+#include "../../maketest/maketest.h"
 
 void abs_test ()
 {
@@ -82,7 +82,7 @@ int main (int argc, char** argv)
 |  |--Makefile
 |--maketest
 |  |--Makefile
-|  |--tests.h
+|  |--maketest.h
 |  |--README.md
 
 ```
