@@ -1,10 +1,14 @@
 # maketest
-simple test library based on a single header and makefile
+simple test library based on a makefile.
+
+Two separate header files are included to help organise tests. It is not required that you include either header in your test code, but it has some useful helper functions.
 
 ## maketest.h
-Header file to be included in all test code.
-
-NB: It is not required that you include this header in your test code, but it has some useful helper functions.
+Header file with utility functions.
+assert_* functions are implemented with the preprocessor.
+TEST* functions are implemented with the preprocessor.
+timing information is implemented by functions which use std::function.
+In future, this dependency will be removed so this header can be used in plain c situations.
 
 assert specialisations:
 + assert_are_equal (x, y) : assert two values are equal, using == operator
@@ -17,6 +21,24 @@ Timing wrapper functions:
 + TEST(x) : wrap a function x with timing information
 + TEST_GROUP (x) : wrap a function x with timing information as a group
 + TEST_SUITE (x) : wrap a function x with timing information as a suite
+
+## maketestcc.h
+Header file with utility functions for formatting tests.
+Requires c++ initialiser lists.
+assert_* functions are implemented as functions.
+TEST_* objects are stl containers.
+This header allows neater formatting and labelling of test code.
+In future, timing information will be added.
+
+assert specialisations:
++ assert_are_equal (x, y) : assert two values are equal, using == operator
++ assert_are_equal (x, y, t) : assert two values are within a given tolerance, using abs() and -
+
+TEST (string_name, lambda (void)) : test function with name and code.
+TEST_SET (string_name, list of TESTs) : test set
+TEST_SUITE (string_name, list of TEST_SETs): test suite.
+RUN_TEST (string_name) : name of the test suite to execute.
+
 
 ## Makefile
 The magic makefile which compiles all the files matching <TEST_DIR> / \<any> / \<filename>.cpp into test programs.
@@ -32,6 +54,10 @@ Requirements:
 Notes:
 + Creates "bin" subdirectory under <TEST_DIR>.
 + Test executables are output to <TEST_DIR>/bin.
++ There is a bug when tests are in the same dir as the makefile:
+  + Using an empty <TEST_DIR> means .cpp files are not discovered,
+  + Using "." for <TEST_DIR> means executables are written to .bin rather than <TEST_DIR>/bin.
+  + Fixing this requires some make voodoo I'm not aware of yet.
 
 See Makefile for a list of commands.
 
@@ -68,6 +94,26 @@ int main (int argc, char** argv)
 }
 ```
 
+## Example test code file with neat formatting
+<PROJECT_DIR>/tests/mats_test.cpp
+```cpp
+#include "../../maketest/maketestcc.h"
+
+TEST_SUITE _
+{
+  TEST_SET ("maths_test_group",
+  {
+    TEST ("abs test",
+    [](){
+      auto a = 1.0f;
+      auto b = -2.0f;
+      assert_are_equal (abs (a-b), 1.0f);
+    }
+  }
+}
+
+RUN_SUITE (_);
+```
 ## Example project structure
 ```
 .
