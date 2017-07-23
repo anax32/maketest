@@ -34,6 +34,7 @@ assert specialisations:
 + assert_are_equal (x, y) : assert two values are equal, using == operator
 + assert_are_equal (x, y, t) : assert two values are within a given tolerance, using abs() and -
 
+Prettyfying structures:
 + TEST (string_name, lambda (void)) : test function with name and code.
 + TEST_SET (string_name, list of TESTs) : test set
 + TEST_SUITE (string_name, list of TEST_SETs): test suite.
