@@ -4,4 +4,4 @@ INCLUDE = -Iinclude/
 LDLIBS = -lpng -lX11 -lGL -lGLEW
 
 TEST_DIR = tests/
-include ../test/Makefile
+include ../maketest/Makefile
