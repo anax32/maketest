@@ -37,12 +37,19 @@ TESTS = $(wildcard $(TEST_DIR)*/*.cpp)
 TEST_OUTPUTS = $(TESTS:.cpp=.test)
 #TEST_OUTPUTS = $(TESTS:.cpp=)
 
+LCOV = lcov
+GENHTML = genhtml
+TEST_COV_DIR = $(TEST_BIN_DIR)cov/
+
 $(TEST_BIN_DIR):
 	$(TEST_MKDIR) $(TEST_BIN_DIR)
 
 %.test : $(TEST_BIN_DIR)
-	$(CXX) $(CXXFLAGS) $(LDLIBS) -o $(TEST_BIN_DIR)$(notdir $(basename $@)) $(basename $@).cpp
+	$(CXX) $(CXXFLAGS) -ftest-coverage -fprofile-arcs $(LDLIBS) -o $(TEST_BIN_DIR)$(notdir $(basename $@)) $(basename $@).cpp
 	$(TEST_BIN_DIR)$(notdir $(basename $@))
+	$(LCOV) -b ./ -d ./ -c -o $(basename $@).lcov_out
+	$(TEST_MKDIR) $(TEST_COV_DIR)
+	$(GENHTML) $(basename $@).lcov_out -o $(TEST_COV_DIR)
 
 all_tests : $(TEST_OUTPUTS) $(TEST_BIN_DIR)
 
@@ -51,3 +58,6 @@ run_tests :
 
 clean_tests :
 	rm -drf $(TEST_BIN_DIR)
+	rm *.gcno
+	rm *.gcda
+	rm *.lcov_out
