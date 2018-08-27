@@ -21,12 +21,15 @@
 #	(NB: replace the filetype with .test)
 #
 # all_tests:
+# all-tests:
 #	build and execute all test files.
 #
 # run_tests:
+# run-tests:
 #	run all executes in TEST_DIR/bin
 #
 # clean_tests:
+# clean-tests:
 #	remove TEST_DIR/bin and contents
 ######################################################
 
@@ -51,3 +54,9 @@ run_tests :
 
 clean_tests :
 	rm -drf $(TEST_BIN_DIR)
+
+all-tests : all_tests
+
+run-tests : run_tests
+
+clean-tests : clean_tests
